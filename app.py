@@ -4,6 +4,8 @@ import tkinter.font as tkFont
 import tkinter.ttk as ttk
 from ttkthemes import ThemedStyle
 
+import grafico
+
 ventanaPrincipal = tkinter.Tk()
 ventanaPrincipal.geometry("800x600")
 # Deshabilita el resizing de la pantalla (no permite hacer la ventana más grande o más pequeña) para que no se descoloquen los widgets
@@ -183,4 +185,9 @@ botonBorrar = ttk.Button(
     bottomFrame, text="Borrar Historial", command=BorrarHistorial)
 botonBorrar.grid(row=1, column=1, sticky="W")
 
+botonGenerarGrafico = ttk.Button(
+    bottomFrame, text="Generar Gráfico", command=grafico.generar)
+botonGenerarGrafico.grid(row=1, column=2, padx="30", sticky="W")
+
 ventanaPrincipal.mainloop()
+6

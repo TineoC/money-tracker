@@ -1,0 +1,2 @@
+﻿def generar():
+    print("Funciona")
