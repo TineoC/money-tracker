@@ -10,19 +10,20 @@ def calcularTotales():
         "Ropa": 0,
         "Sueldo": 0,
         "Prestamo": 0,
-        "Venta": 0
+        "Venta": 0,
     }
 
     with open("historial.txt", "r") as historial:
         lines = historial.readlines()
 
-    i = 0
+    i = 1
 
     for line in lines:
-        line = line.rstrip('\n')
-        if ((i+1) % 4 == 0):
-            totalCategorias[lines[i-2].rstrip('\n')
-                            ] = int(lines[i-1].rstrip('\n'))
+        line = line.rstrip("\n")
+
+        if i % 4 == 0:
+            totalCategorias[lines[i - 3].rstrip("\n")] += int(lines[i - 2].rstrip("\n"))
+
         i += 1
 
     return totalCategorias
@@ -44,6 +45,9 @@ def generar():
     labels = dict.keys()
     values = dict.values()
 
-    plt.pie(values, labels=labels, autopct='%1.1f%%')
+    plt.pie(values, labels=labels, autopct="%1.1f%%")
 
     plt.show()
+
+
+generar()
