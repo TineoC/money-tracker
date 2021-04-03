@@ -88,6 +88,11 @@ def ventanaEntrada():
             messagebox.showerror("ERROR", "Debe ingresar un NUMERO")
             ventanaEntrada.destroy()  # Quitar el ventanaEntrada
             return
+        #PopUp error si titulo es un numero o esta vacio.    
+        if titulo.get() == "" or titulo.get().replace(".","").isnumeric():
+            messagebox.showerror("ERROR", "Titulo se encuentra vacío o es un monto")
+            ventanaEntrada.destroy()
+            return
         # Escrbir las entradas en el archivo historial en caso de ser correctas
         with open("historial.txt", "a") as historial:
             historial.write(titulo.get()+"\n")
