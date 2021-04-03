@@ -27,6 +27,14 @@ tituloDefault = tkinter.StringVar()
 montoDefault = tkinter.StringVar()
 # montoDefault.set("Monto...")
 
+def EscribirText():
+    Text.config(state=NORMAL)
+    Text.delete("1.0", END)
+    with open("historial.txt", "r") as historial:
+        for line in historial:
+            Text.insert(END, line)
+    Text.config(state=DISABLED)
+
 # Calculamos el balance por si no es la primera vez que se inicia la app.
 global balance
 balance = 0
@@ -63,12 +71,7 @@ def ventanaEntrada():
             historial.write(str(monto)+"\n")
             historial.write(
                 "------------------------------------------------------------------------------------------------------------------------"+"\n")
-        Text.config(state=NORMAL)
-        Text.delete("1.0", END)
-        with open("historial.txt", "r") as historial:
-            for line in historial:
-                Text.insert(END, line)
-        Text.config(state=DISABLED)
+        EscribirText()
         ventanaEntrada.destroy()
 
     # Creación de la ventana que saldra como pop-up
@@ -126,11 +129,7 @@ Text = tkinter.Text(cuerpoFrame, font=latoBig, state=DISABLED, height="20")
 Text.grid(row=1, column=0)
 
 # Anotamos el contenido de historial.txt en la textbox por si no es la primera vez que se inicia la app
-Text.config(state=NORMAL)
-with open("historial.txt", "r") as historial:
-    for line in historial:
-        Text.insert(END, line)
-Text.config(state=DISABLED)
+EscribirText()
 
 # FUNCIONES ventanaPrincipal
 
