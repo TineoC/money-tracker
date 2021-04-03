@@ -26,6 +26,3 @@
 
 def generar():
     total = calcularTotales()
-
-
-generar()
