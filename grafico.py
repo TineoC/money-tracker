@@ -48,6 +48,3 @@ def generar():
     plt.pie(values, labels=labels, autopct="%1.1f%%")
 
     plt.show()
-
-
-generar()
