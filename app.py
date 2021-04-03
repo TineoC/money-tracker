@@ -23,32 +23,57 @@ hStyle.configure("header.TFrame", background="#F7F4F3")
 
 # Variables (tkinter tiene un bug, no toma las textvariable para entry si no son globales)
 tituloDefault = tkinter.StringVar()
-# tituloDefault.set("Titulo...")
 montoDefault = tkinter.StringVar()
-# montoDefault.set("Monto...")
+
+gastos = ["Comida", "Entretenimiento", "Servicios", "Ropa", "Prestamo"]
+ingresos = ["Sueldo", "Venta"]
+filtros = gastos + ingresos
+
+colorarR = False
+colorarG = False
 
 def EscribirText():
+    global colorarR
+    global colorarG
+
     Text.config(state=NORMAL)
     Text.delete("1.0", END)
     with open("historial.txt", "r") as historial:
         for line in historial:
-            Text.insert(END, line)
-    Text.config(state=DISABLED)
+            if line.rstrip("\n") in gastos:
+                Text.insert(END, line)
+                colorarR = True
+                continue
+            elif line.rstrip("\n") in ingresos:
+                Text.insert(END, line)
+                colorarG = True
+                continue
+            elif colorarR == True:
+                colorarR = False
+                Text.insert(END, line, "gasto")
+                continue
+            elif colorarG == True:
+                colorarG = False
+                Text.insert(END, line, "ingreso")
+                continue
+            else:
+                Text.insert(END, line)
+
+        Text.config(state=DISABLED)
 
 # Calculamos el balance por si no es la primera vez que se inicia la app.
-global balance
+
 balance = 0
 with open("historial.txt", "r") as historial:
     for line in historial:
         line = line.rstrip('\n')
-        if line.isnumeric():
-            balance += int(line)
-        elif line.lstrip("-").isnumeric():
-            balance -= -int(line)
-        else:
-            continue
+        try: 
+            float(line)
+        except : continue
+        balance += float(line)
 
 # Funcion que crea la ventana ventanaEntrada, sus widgets etc.
+
 
 def ventanaEntrada():
     tituloDefault.set("Titulo...")
@@ -57,18 +82,19 @@ def ventanaEntrada():
 
     def añadirEntrada():
         try:
-            monto = int(textbox.get())
+            monto = float(textbox.get().replace(",","."))
         except:
             # En caso del usuario no escribir un número en el input de monto imprimir error
             messagebox.showerror("ERROR", "Debe ingresar un NUMERO")
             ventanaEntrada.destroy()  # Quitar el ventanaEntrada
             return
-
         # Escrbir las entradas en el archivo historial en caso de ser correctas
         with open("historial.txt", "a") as historial:
             historial.write(titulo.get()+"\n")
             historial.write(opcion.get()+"\n")
-            historial.write(str(monto)+"\n")
+            if opcion.get() in gastos:
+                historial.write(str(-monto)+"\n")
+            else: historial.write(str(monto)+"\n")
             historial.write(
                 "------------------------------------------------------------------------------------------------------------------------"+"\n")
         EscribirText()
@@ -84,8 +110,7 @@ def ventanaEntrada():
     # lista con filtros default (para que el usuario cree los suyos
     # podemos hacer que se lea esta lista desde un txt y dar la opcion de
     # que el usuario escriba una etiqueta y se añada al txt como guardado)
-    filtros = ["Comida", "Entretenimiento", "Servicios",
-               "Ropa", "Sueldo", "Prestamo", "Venta"]
+    
 
     # label que indica al usuario lo que debe hacer + caja de texto (entry) donde ingresará el valor del monto
     textbox = ttk.Entry(ventanaEntrada, textvariable=montoDefault, justify="center")
@@ -127,6 +152,8 @@ boton = ttk.Button(cuerpoFrame, text="Añadir entrada", command=ventanaEntrada)
 boton.grid(row=0, column=0, padx=10, pady=10)
 
 Text = tkinter.Text(cuerpoFrame, font=latoBig, state=DISABLED, height="20")
+Text.tag_configure("gasto",foreground = "red") #tag creada que se puede dar a una parte del texto
+Text.tag_configure("ingreso",foreground = "green")
 Text.grid(row=1, column=0)
 
 # Anotamos el contenido de historial.txt en la textbox por si no es la primera vez que se inicia la app
@@ -142,12 +169,10 @@ def CalcularBalance():
     with open("historial.txt", "r") as historial:
         for line in historial:
             line = line.rstrip('\n')
-            if line.isnumeric():
-                balance += int(line)
-            elif line.lstrip("-").isnumeric():
-                balance -= -int(line)
-            else:
-                continue
+            try: 
+                float(line)
+            except : continue
+            balance += float(line)
     balanceLabel["text"] = "Balance: " + str(balance)
 
 # Borra el contenido del archivo "historial.txt" y limpia la caja de texto que muestra las entradas.

@@ -22,7 +22,7 @@ def calcularTotales():
         line = line.rstrip("\n")
 
         if i % 4 == 0:
-            totalCategorias[lines[i - 3].rstrip("\n")] += int(lines[i - 2].rstrip("\n"))
+            totalCategorias[lines[i - 3].rstrip("\n")] += float(lines[i - 2].rstrip("\n"))
 
         i += 1
 
