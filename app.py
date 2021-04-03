@@ -72,6 +72,7 @@ def ventanaEntrada():
             historial.write(
                 "------------------------------------------------------------------------------------------------------------------------"+"\n")
         EscribirText()
+        CalcularBalance()
         ventanaEntrada.destroy()
 
     # Creación de la ventana que saldra como pop-up
