@@ -190,4 +190,3 @@ botonGenerarGrafico = ttk.Button(
 botonGenerarGrafico.grid(row=1, column=2, padx="30", sticky="W")
 
 ventanaPrincipal.mainloop()
-6
