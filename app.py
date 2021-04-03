@@ -40,8 +40,7 @@ with open("historial.txt", "r") as historial:
         else:
             continue
 
-# Funcion que crea la ventana PopUp, sus widgets etc.
-
+# Funcion que crea la ventana ventanaEntrada, sus widgets etc.
 
 def ventanaEntrada():
     tituloDefault.set("Titulo...")
@@ -54,7 +53,7 @@ def ventanaEntrada():
         except:
             # En caso del usuario no escribir un número en el input de monto imprimir error
             messagebox.showerror("ERROR", "Debe ingresar un NUMERO")
-            popUp.destroy()  # Quitar el popup
+            ventanaEntrada.destroy()  # Quitar el ventanaEntrada
             return
 
         # Escrbir las entradas en el archivo historial en caso de ser correctas
@@ -70,13 +69,13 @@ def ventanaEntrada():
             for line in historial:
                 Text.insert(END, line)
         Text.config(state=DISABLED)
-        popUp.destroy()
+        ventanaEntrada.destroy()
 
     # Creación de la ventana que saldra como pop-up
-    popUp = tkinter.Toplevel(ventanaPrincipal)  # Desplegar ventana de entrada
-    popUp.geometry("300x150")
-    popUp.resizable(width=False, height=False)  # No permitir resizing
-    popUp.title("Añadir Entrada...")
+    ventanaEntrada = tkinter.Toplevel(ventanaPrincipal)  # Desplegar ventana de entrada
+    ventanaEntrada.geometry("300x150")
+    ventanaEntrada.resizable(width=False, height=False)  # No permitir resizing
+    ventanaEntrada.title("Añadir Entrada...")
 
     # lista con filtros default (para que el usuario cree los suyos
     # podemos hacer que se lea esta lista desde un txt y dar la opcion de
@@ -85,29 +84,23 @@ def ventanaEntrada():
                "Ropa", "Sueldo", "Prestamo", "Venta"]
 
     # label que indica al usuario lo que debe hacer + caja de texto (entry) donde ingresará el valor del monto
-    textbox = ttk.Entry(popUp, textvariable=montoDefault, justify="center")
-    titulo = ttk.Entry(popUp, textvariable=tituloDefault, justify="center")
+    textbox = ttk.Entry(ventanaEntrada, textvariable=montoDefault, justify="center")
+    titulo = ttk.Entry(ventanaEntrada, textvariable=tituloDefault, justify="center")
 
     # variable que almacenara nuestra opcion para el filtro en el selector
     opcion = tkinter.StringVar()
     # opcion.set(filtros[0])
 
     # creamos el optionbox (selector)
-    selectorFiltro = ttk.OptionMenu(popUp, opcion, filtros[0], *filtros)
+    selectorFiltro = ttk.OptionMenu(ventanaEntrada, opcion, filtros[0], *filtros)
 
-    guardarEntrada = ttk.Button(popUp, text="Guardar", command=añadirEntrada)
+    guardarEntrada = ttk.Button(ventanaEntrada, text="Guardar", command=añadirEntrada)
 
     # Colocamos los elementos de nuestra ventana en el grid de la misma para que se muestren al usuario
     titulo.grid(row=0, column=0, padx=15)
     textbox.grid(row=0, column=1, pady=20)  # ese pad afecta al row entero
     selectorFiltro.grid(row=1, column=0)
     guardarEntrada.grid(row=1, column=1, pady=10)
-
-# metodo 2, que seria un popup solo para un input basico...
-# def ConfigBalance():
-#     balance = simpledialog.askinteger(title="Configurar balance...", prompt="Balance:")
-#     conBalance = balance
-
 
 # HEADER
 headerFrame = ttk.Frame(ventanaPrincipal, width=600,
@@ -166,6 +159,7 @@ def BorrarHistorial():
     Text.config(state=NORMAL)
     Text.delete("1.0", END)
     Text.config(state=DISABLED)
+    balanceLabel["text"] = "Balance: 0"
 
 
 # BOTTOM
