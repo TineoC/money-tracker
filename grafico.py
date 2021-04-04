@@ -8,9 +8,7 @@ def calcularTotales():
         "Entretenimiento": 0,
         "Servicios": 0,
         "Ropa": 0,
-        "Sueldo": 0,
-        "Prestamo": 0,
-        "Venta": 0,
+        "Prestamo": 0
     }
 
     with open("historial.txt", "r") as historial:
@@ -22,7 +20,9 @@ def calcularTotales():
         line = line.rstrip("\n")
 
         if i % 4 == 0:
-            totalCategorias[lines[i - 3].rstrip("\n")] += abs(float(lines[i - 2].rstrip("\n")))
+            try:
+                totalCategorias[lines[i - 3].rstrip("\n")] += abs(float(lines[i - 2].rstrip("\n")))
+            except: continue #Por si la etiqueta es de tipo ingreso
 
         i += 1
 
