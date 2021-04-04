@@ -161,6 +161,10 @@ Text.tag_configure("gasto",foreground = "red") #tag creada que se puede dar a un
 Text.tag_configure("ingreso",foreground = "green")
 Text.grid(row=1, column=0)
 
+scrollbar = ttk.Scrollbar(cuerpoFrame, command = Text.yview)
+scrollbar.grid(row = 1, column = 1, sticky = "nsew")
+Text["yscrollcommand"] = scrollbar.set
+
 # Anotamos el contenido de historial.txt en la textbox por si no es la primera vez que se inicia la app
 EscribirText()
 
