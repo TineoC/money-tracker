@@ -3,7 +3,7 @@ from tkinter import simpledialog, messagebox, NORMAL, DISABLED, END
 import tkinter.font as tkFont
 import tkinter.ttk as ttk
 from ttkthemes import ThemedStyle
-
+from datetime import date
 import grafico
 
 ventanaPrincipal = tkinter.Tk()
@@ -95,7 +95,7 @@ def ventanaEntrada():
             return
         # Escrbir las entradas en el archivo historial en caso de ser correctas
         with open("historial.txt", "a") as historial:
-            historial.write(titulo.get()+"\n")
+            historial.write(titulo.get()+" "+ str(date.today())+"\n")
             historial.write(opcion.get()+"\n")
             if opcion.get() in gastos:
                 historial.write(str(-monto)+"\n")
@@ -200,17 +200,13 @@ bottomFrame.grid(row=2, column=0, sticky="W")
 balanceLabel = ttk.Label(bottomFrame, text="Balance: " + str(balance),
                          font=latoBig, foreground="#1E5871", background="#F7F4F3")
 balanceLabel.grid(row=0, column=0, padx="30", sticky="W")
-# Boton que actualiza/calcula el balance en base a las entradas del usuario
-botonBalance = ttk.Button(
-    bottomFrame, text="Calcular Balance", command=CalcularBalance)
-botonBalance.grid(row=1, column=0, padx="30", pady="10", sticky="W")
 # Boton que borra el contenido de historial.txt
 botonBorrar = ttk.Button(
     bottomFrame, text="Borrar Historial", command=BorrarHistorial)
-botonBorrar.grid(row=1, column=1, sticky="W")
+botonBorrar.grid(row=1, column=0, padx= "30", pady = "10", sticky="W")
 
 botonGenerarGrafico = ttk.Button(
     bottomFrame, text="Generar Gráfico", command=grafico.generar)
-botonGenerarGrafico.grid(row=1, column=2, padx="30", sticky="W")
+botonGenerarGrafico.grid(row=1, column=1, sticky="W")
 
 ventanaPrincipal.mainloop()
