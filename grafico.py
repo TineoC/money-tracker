@@ -8,7 +8,10 @@ def calcularTotales():
         "Entretenimiento": 0,
         "Servicios": 0,
         "Ropa": 0,
-        "Prestamo": 0
+        "Prestamo": 0,
+        "Vacaciones": 0, 
+        "Renta": 0, 
+        "Gastos Personales": 0
     }
 
     with open("historial.txt", "r") as historial:
