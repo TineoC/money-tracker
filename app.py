@@ -25,7 +25,7 @@ hStyle.configure("header.TFrame", background="#F7F4F3")
 tituloDefault = tkinter.StringVar()
 montoDefault = tkinter.StringVar()
 
-gastos = ["Comida", "Entretenimiento", "Servicios", "Ropa", "Prestamo"]
+gastos = ["Comida", "Entretenimiento", "Servicios", "Ropa", "Prestamo", "Vacaciones", "Renta", "Gastos Personales"]
 ingresos = ["Sueldo", "Venta"]
 filtros = gastos + ingresos
 
