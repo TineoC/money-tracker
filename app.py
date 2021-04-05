@@ -211,6 +211,6 @@ botonBorrar.grid(row=1, column=0, pady = "10", sticky="W")
 
 botonGenerarGrafico = ttk.Button(
     bottomFrame, text="Generar Gráfico", command=grafico.generar)
-botonGenerarGrafico.grid(row=1, column=1, sticky="W")
+botonGenerarGrafico.grid(row=1, column=1, padx = "20",sticky="W")
 
 ventanaPrincipal.mainloop()
