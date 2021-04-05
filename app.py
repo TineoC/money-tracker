@@ -199,15 +199,15 @@ def BorrarHistorial():
 # BOTTOM
 bottomFrame = ttk.Frame(ventanaPrincipal, width=800,
                         height=50, style="header.TFrame")
-bottomFrame.grid(row=2, column=0, sticky="W")
+bottomFrame.grid(row=2, column=0, sticky="W", padx = "30")
 # Label que muestra el balance actual
 balanceLabel = ttk.Label(bottomFrame, text="Balance: " + str(balance),
                          font=latoBig, foreground="#1E5871", background="#F7F4F3")
-balanceLabel.grid(row=0, column=0, padx="30", sticky="W")
+balanceLabel.grid(row=0, column=0, sticky="W", columnspan = "4")
 # Boton que borra el contenido de historial.txt
 botonBorrar = ttk.Button(
     bottomFrame, text="Borrar Historial", command=BorrarHistorial)
-botonBorrar.grid(row=1, column=0, padx= "30", pady = "10", sticky="W")
+botonBorrar.grid(row=1, column=0, pady = "10", sticky="W")
 
 botonGenerarGrafico = ttk.Button(
     bottomFrame, text="Generar Gráfico", command=grafico.generar)
