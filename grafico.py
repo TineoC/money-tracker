@@ -1,9 +1,5 @@
 ﻿import matplotlib.pyplot as plt
-
-with open("historial.txt", "r") as historial:
-    global lines
-    lines = historial.readlines()
-
+from tkinter import messagebox as popUp
 
 def calcularTotales():
 
@@ -64,8 +60,19 @@ def eliminarCeros(dict):
 
 def generar():
 
+    with open("historial.txt", "r") as historial:
+        global lines
+        lines = historial.readlines()
+
+    if len(lines) == 0:
+        # Si el historial está vacío:
+
+        popUp.showerror(
+            "Error", "Debes colocar al menos una entrada para generar un gráfico"
+        )
+        return # No imprimas gráfico
+
     dict = eliminarCeros(calcularTotales())
-    # print(dict)
 
     labels = dict.keys()
     values = dict.values()
@@ -79,6 +86,3 @@ def generar():
     plt.pie(values, labels=labels, autopct="%1.1f%%")
 
     plt.show()
-
-
-generar()
