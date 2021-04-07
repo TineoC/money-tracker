@@ -12,12 +12,12 @@ def calcularTotales():
         "Prestamo": 0,
         "Vacaciones": 0,
         "Renta": 0,
-        "Gastos Personales": 0,
+        "Gastos Personales": 0
     }
 
     for i in range(3, len(lines), 4):
         # Si está en la linea divisora
-        # De los montos el index de la categoría y el monto son:
+        # De los montos, el index de la categoría y el monto son:
         # Categoría: lines[i - 2]
         # Monto: lines[i - 1]
 
@@ -38,7 +38,7 @@ def calcularTotales():
             # Añade al diccionario totalCategorías:
             #   Asigna a la key de la categoría de la entrada, el valor del monto en la entrada leída además, acumula ese valor
 
-            totalGastos[categoria] += abs(float(monto))
+            totalGastos[categoria] += monto
         except:
             # Si no está, puede ser varia razones:
             # 1. La entrada que recibe, es de Categoría Sueldo
