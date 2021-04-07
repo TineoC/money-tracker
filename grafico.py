@@ -1,35 +1,56 @@
 ﻿import matplotlib.pyplot as plt
 
+with open("historial.txt", "r") as historial:
+    global lines
+    lines = historial.readlines()
+
 
 def calcularTotales():
 
-    totalCategorias = {
+    totalGastos = {
         "Comida": 0,
         "Entretenimiento": 0,
         "Servicios": 0,
         "Ropa": 0,
         "Prestamo": 0,
-        "Vacaciones": 0, 
-        "Renta": 0, 
-        "Gastos Personales": 0
+        "Vacaciones": 0,
+        "Renta": 0,
+        "Gastos Personales": 0,
     }
 
-    with open("historial.txt", "r") as historial:
-        lines = historial.readlines()
+    for i in range(3, len(lines), 4):
+        # Si está en la linea divisora
+        # De los montos el index de la categoría y el monto son:
+        # Categoría: lines[i - 2]
+        # Monto: lines[i - 1]
 
-    i = 1
+        categoria = lines[i - 2].rstrip("\n")
 
-    for line in lines:
-        line = line.rstrip("\n")
+        """
+        El valor del monto acumúlalo con el valor absoluto ya que si no, estará el menos (-) que pusimos en la lista de entrada:
+            Ejemplo:
+                Desayuno    fecha
+                -200
+                A tí solo te interesa el 200, no el (-200). Ya que el gráfico no funciona con valores negativos
+        """
 
-        if i % 4 == 0:
-            try:
-                totalCategorias[lines[i - 3].rstrip("\n")] += abs(float(lines[i - 2].rstrip("\n")))
-            except: continue #Por si la etiqueta es de tipo ingreso
+        monto = abs(float(lines[i - 1].rstrip("\n")))
 
-        i += 1
+        # Primero, prueba si la categoría existe en el diccionario de totalGastos
+        try:
+            # Añade al diccionario totalCategorías:
+            #   Asigna a la key de la categoría de la entrada, el valor del monto en la entrada leída además, acumula ese valor
 
-    return totalCategorias
+            totalGastos[categoria] += abs(float(monto))
+        except:
+            # Si no está, puede ser varia razones:
+            # 1. La entrada que recibe, es de Categoría Sueldo
+            # 2. La Categoría de Gasto leída, no existe en las keys del diccionario
+
+            # En cualquiera de los casos, se ignorará la línea y seguirá el bucle
+            pass
+
+    return totalGastos
 
 
 def eliminarCeros(dict):
@@ -44,10 +65,20 @@ def eliminarCeros(dict):
 def generar():
 
     dict = eliminarCeros(calcularTotales())
+    # print(dict)
 
     labels = dict.keys()
     values = dict.values()
 
+    window = plt.figure()
+
+    window.canvas.set_window_title("Gráfico")
+
+    plt.title("Gastos por Categoría")
+
     plt.pie(values, labels=labels, autopct="%1.1f%%")
 
     plt.show()
+
+
+generar()
