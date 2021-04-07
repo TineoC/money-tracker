@@ -1,6 +1,7 @@
 ﻿import matplotlib.pyplot as plt
 from tkinter import messagebox as popUp
 
+
 def calcularTotales():
 
     totalGastos = {
@@ -70,7 +71,7 @@ def generar():
         popUp.showerror(
             "Error", "Debes colocar al menos una entrada para generar un gráfico"
         )
-        return # No imprimas gráfico
+        return  # No imprimas gráfico
 
     dict = eliminarCeros(calcularTotales())
 
@@ -79,10 +80,11 @@ def generar():
 
     window = plt.figure()
 
-    window.canvas.set_window_title("Gráfico")
-
     plt.title("Gastos por Categoría")
 
-    plt.pie(values, labels=labels, autopct="%1.1f%%")
+    plt.pie(values, labels=labels, autopct="%0.2f%%")
 
     plt.show()
+
+
+generar()
